@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function MeshGradient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +7,7 @@ export function MeshGradient() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -20,49 +20,49 @@ export function MeshGradient() {
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     // Modern gradient colors (lighter blues, teals, oranges, minimal purple)
     const blobs = [
-      { 
+      {
         color: { r: 147, g: 197, b: 253 }, // Light blue
         x: 0.2,
         y: 0.3,
-        speed: 0.8,
-        size: 0.5
+        speed: 1.5,
+        size: 0.5,
       },
-      { 
+      {
         color: { r: 125, g: 211, b: 252 }, // Sky blue
         x: 0.7,
         y: 0.2,
-        speed: 1.0,
-        size: 0.45
+        speed: 1.8,
+        size: 0.45,
       },
-      { 
+      {
         color: { r: 96, g: 165, b: 250 }, // Soft blue
         x: 0.5,
         y: 0.5,
-        speed: 0.9,
-        size: 0.4
+        speed: 1.6,
+        size: 0.4,
       },
-      { 
+      {
         color: { r: 34, g: 211, b: 238 }, // Cyan/teal
         x: 0.8,
         y: 0.7,
-        speed: 0.85,
-        size: 0.45
+        speed: 1.4,
+        size: 0.45,
       },
-      { 
+      {
         color: { r: 251, g: 191, b: 36 }, // Warm yellow-orange
         x: 0.3,
         y: 0.8,
-        speed: 0.75,
-        size: 0.35
-      }
+        speed: 1.3,
+        size: 0.35,
+      },
     ];
 
     const animate = () => {
-      time += 0.0012; // Faster color transitions
+      time += 0.003; // Increased speed for more frequent movement
 
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
@@ -72,18 +72,27 @@ export function MeshGradient() {
 
       // Draw each blob
       blobs.forEach((blob, index) => {
-        const offsetX = Math.sin(time * blob.speed + index) * 0.15;
-        const offsetY = Math.cos(time * blob.speed * 0.8 + index) * 0.15;
-        
+        const offsetX = Math.sin(time * blob.speed + index) * 0.2; // Increased range
+        const offsetY = Math.cos(time * blob.speed * 0.8 + index) * 0.2; // Increased range
+
         const x = w * (blob.x + offsetX);
         const y = h * (blob.y + offsetY);
         const radius = Math.max(w, h) * blob.size;
 
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        
-        gradient.addColorStop(0, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.8)`);
-        gradient.addColorStop(0.5, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.4)`);
-        gradient.addColorStop(1, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0)`);
+
+        gradient.addColorStop(
+          0,
+          `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.8)`
+        );
+        gradient.addColorStop(
+          0.5,
+          `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.4)`
+        );
+        gradient.addColorStop(
+          1,
+          `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0)`
+        );
 
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, w, h);
@@ -95,7 +104,7 @@ export function MeshGradient() {
     animate();
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -104,7 +113,7 @@ export function MeshGradient() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ filter: 'blur(60px)' }}
+      style={{ filter: "blur(60px)" }}
     />
   );
 }

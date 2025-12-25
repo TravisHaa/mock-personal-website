@@ -77,7 +77,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               top: '6px'
             }}
             animate={{
-              left: indicatorStyle.left + 6,
+              left: indicatorStyle.left,
               width: indicatorStyle.width
             }}
             transition={{
